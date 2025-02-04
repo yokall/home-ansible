@@ -1,0 +1,7 @@
+- name: Test Ansible connection
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Echo a simple debug message
+      ansible.builtin.debug:
+        msg: "Ansible successfully connected to {{ inventory_hostname }}"
