@@ -1,0 +1,25 @@
+- name: Add user colin with sudo privileges and SSH access
+  hosts: all
+  become: true
+  tasks:
+    - name: Add the user colin
+      ansible.builtin.user:
+        name: colin
+        shell: /bin/bash
+        groups: sudo
+        state: present
+
+    - name: Add public SSH key for colin
+      ansible.posix.authorized_key:
+        user: colin
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+        path: /home/colin/.ssh/authorized_keys
+
+    - name: Enable no password sudo for colin
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/colin
+        content: "colin ALL=(ALL) NOPASSWD:ALL\n"
+        owner: root
+        group: root
+        mode: "0440"
