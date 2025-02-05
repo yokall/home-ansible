@@ -13,13 +13,14 @@ The current aim of this project is to install [pi-hole](https://pi-hole.net/)
 
 ## Check Connection to Server
 
-`ansible-playbook -i inventory/hosts.ini playbooks/test_connection.yml`
+`ansible-playbook -i inventory/hosts.ini playbooks/test_connection.yml -e 'ansible_user=root'`
 
-> **Note:** The user flag is only required if the remote user has not been created yet.
+> **Note:** The ansible_user extra variable is only required if the remote user has not been created yet.
 
 ## Add non-root user
 
-On a fresh Diet-Pi OS the only user is root.  The below playbook installs another user.
-The first time this is ran it must be as root as that is the only user that exists
+On a fresh Diet-Pi OS the only user is root, the below playbook installs another user.
 
 Ran `ansible-playbook -i inventory/hosts.ini playbooks/add_user.yml -e 'ansible_user=root'`
+
+> **Note:** The ansible_user extra variable is only required if the remote user has not been created yet.
