@@ -13,7 +13,7 @@ The current aim of this project is to install [pi-hole](https://pi-hole.net/)
 
 ## Check Connection to Server
 
-`ansible-playbook -i inventory/hosts.ini --user=root playbooks/test_connection.yml`
+`ansible-playbook -i inventory/hosts.ini playbooks/test_connection.yml`
 
 > **Note:** The user flag is only required if the remote user has not been created yet.
 
