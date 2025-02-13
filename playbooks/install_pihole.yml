@@ -1,0 +1,48 @@
+---
+- name: Install PiHole
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure /etc/pihole directory exists
+      ansible.builtin.file:
+        path: /etc/pihole
+        state: directory
+        mode: '0775'
+
+    - name: Create setupVars.conf file
+      ansible.builtin.copy:
+        dest: /etc/pihole/setupVars.conf
+        content: |
+          PIHOLE_INTERFACE=eth0
+          PIHOLE_DNS_1=1.1.1.1
+          PIHOLE_DNS_2=1.0.0.1
+          QUERY_LOGGING=true
+          INSTALL_WEB_SERVER=true
+          INSTALL_WEB_INTERFACE=true
+          LIGHTTPD_ENABLED=true
+          CACHE_SIZE=10000
+          DNS_FQDN_REQUIRED=true
+          DNS_BOGUS_PRIV=true
+          DNSMASQ_LISTENING=local
+          WEBPASSWORD=0fc195723f311731e7a88a8a80c256a19fea56340b63ccddff7e3c76ccabeaf1
+          BLOCKING_ENABLED=true
+          WEBUIBOXEDLAYOUT=boxed
+          WEBTHEME=default-dark
+          DHCP_ACTIVE=true
+          DHCP_START=192.168.1.201
+          DHCP_END=192.168.1.251
+          DHCP_ROUTER=192.168.1.254
+          DHCP_LEASETIME=24
+          PIHOLE_DOMAIN=local
+          DHCP_IPv6=false
+          DHCP_rapid_commit=false
+        mode: '0644'
+
+    - name: Download Pi-hole install script
+      ansible.builtin.get_url:
+        url: https://install.pi-hole.net
+        dest: /tmp/install_pi-hole.sh
+        mode: '0755'
+
+    - name: Run Pi-hole install script
+      ansible.builtin.command: /tmp/install_pi-hole.sh --unattended

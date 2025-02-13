@@ -24,3 +24,13 @@ On a fresh Diet-Pi OS the only user is root, the below playbook installs another
 Ran `ansible-playbook -i inventory/hosts.ini playbooks/add_user.yml -e 'ansible_user=root'`
 
 > **Note:** The ansible_user extra variable is only required if the remote user has not been created yet.
+
+## Install pi-hole
+
+Install or update Pi-Hole
+
+Ran `ansible-playbook -i inventory/hosts.ini playbooks/install_pihole.yml`
+
+## Devices with Static IPs
+
+For a list of devices with static IPs, see [Devices with Static IPs](devices.md).
